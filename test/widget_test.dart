@@ -16,15 +16,57 @@ void main() {
     await tester.pumpWidget(const MyApp());
 
     // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    final counter = find.byKey(const Key('counter-value'));
+    expect(tester.widget<Text>(counter).data, '0');
 
     // Tap the '+' icon and trigger a frame.
     await tester.tap(find.byIcon(Icons.add));
     await tester.pump();
 
     // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    expect(tester.widget<Text>(counter).data, '1');
+  });
+
+  testWidgets('Counter decrements', (WidgetTester tester) async {
+    await tester.pumpWidget(const MyApp());
+
+    final counter = find.byKey(const Key('counter-value'));
+    expect(tester.widget<Text>(counter).data, '0');
+
+    // Increment twice so we can verify decrementing without going negative.
+    await tester.tap(find.byKey(const Key('increment-button')));
+    await tester.pump();
+    await tester.tap(find.byKey(const Key('increment-button')));
+    await tester.pump();
+    expect(tester.widget<Text>(counter).data, '2');
+
+    // Tap the '-' button and trigger a frame.
+    await tester.tap(find.byKey(const Key('decrement-button')));
+    await tester.pump();
+
+    // Verify that our counter has decremented.
+    expect(tester.widget<Text>(counter).data, '1');
+  });
+
+  testWidgets('Counter resets to zero', (WidgetTester tester) async {
+    await tester.pumpWidget(const MyApp());
+
+    final counter = find.byKey(const Key('counter-value'));
+
+    // Increment a few times so there's something to reset.
+    await tester.tap(find.byKey(const Key('increment-button')));
+    await tester.pump();
+    await tester.tap(find.byKey(const Key('increment-button')));
+    await tester.pump();
+    await tester.tap(find.byKey(const Key('increment-button')));
+    await tester.pump();
+    expect(tester.widget<Text>(counter).data, '3');
+
+    // Tap the '0' reset button and trigger a frame.
+    await tester.tap(find.byKey(const Key('reset-button')));
+    await tester.pump();
+
+    // Verify that our counter has reset to zero.
+    expect(tester.widget<Text>(counter).data, '0');
   });
 }

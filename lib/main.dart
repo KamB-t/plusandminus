@@ -120,6 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
               style: Theme.of(context).textTheme.headlineLarge,),
             Text(
               '$_counter',
+              key: const Key('counter-value'),
               style: Theme.of(context).textTheme.headlineMedium,
             ),
           ],
@@ -132,6 +133,7 @@ class _MyHomePageState extends State<MyHomePage> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           FloatingActionButton(
+            key: const Key('increment-button'),
             heroTag: 'increment',
             onPressed: _incrementCounter,
             tooltip: 'Increment',
@@ -139,6 +141,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           const SizedBox(height: 12),
           FloatingActionButton(
+            key: const Key('decrement-button'),
             heroTag: 'decrement',
             onPressed: _decrementCounter,
             tooltip: 'Decrement',
@@ -149,6 +152,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           const SizedBox(height: 12),
           FloatingActionButton(
+            key: const Key('reset-button'),
             heroTag: 'reset',
             onPressed: _resetCounter,
             tooltip: 'Reset',
